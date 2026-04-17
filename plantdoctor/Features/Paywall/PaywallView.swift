@@ -4,6 +4,7 @@ import SwiftUI
 struct PaywallView: View {
     @EnvironmentObject private var store: StoreManager
     @EnvironmentObject private var credits: CreditsLedger
+    @EnvironmentObject private var language: LanguageStore
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -226,8 +227,8 @@ struct PaywallView: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
             HStack(spacing: 14) {
-                Link(L10n.Paywall.termsEula, destination: L10n.Legal.eulaURL)
-                Link(L10n.Paywall.privacyPolicy, destination: L10n.Legal.privacyURL)
+                Link(L10n.Paywall.termsEula, destination: L10n.Legal.eulaURL(for: language.current))
+                Link(L10n.Paywall.privacyPolicy, destination: L10n.Legal.privacyURL(for: language.current))
             }
             .font(.caption2)
             .foregroundStyle(Theme.leaf)

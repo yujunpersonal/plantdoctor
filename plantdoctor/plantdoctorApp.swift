@@ -33,6 +33,7 @@ struct plantdoctorApp: App {
     var body: some Scene {
         WindowGroup {
             RootView(entitlement: entitlement)
+                .id(language.current)
                 .environmentObject(credits)
                 .environmentObject(store)
                 .environmentObject(entitlement)

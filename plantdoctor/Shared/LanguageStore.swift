@@ -6,6 +6,13 @@ import Foundation
 /// override that switches the bundle on next launch.
 enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     case english = "en"
+    case simplifiedChinese = "zh-Hans"
+    case traditionalChinese = "zh-Hant"
+    case german = "de"
+    case french = "fr"
+    case japanese = "ja"
+    case korean = "ko"
+    case spanish = "es"
 
     var id: String { rawValue }
 
@@ -15,6 +22,13 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     var displayName: String {
         switch self {
         case .english: return "English"
+        case .simplifiedChinese: return "简体中文"
+        case .traditionalChinese: return "繁體中文"
+        case .german: return "Deutsch"
+        case .french: return "Français"
+        case .japanese: return "日本語"
+        case .korean: return "한국어"
+        case .spanish: return "Español"
         }
     }
 
@@ -28,16 +42,19 @@ final class LanguageStore: ObservableObject {
     @Published var current: AppLanguage {
         didSet {
             UserDefaults.standard.set(current.rawValue, forKey: Self.storageKey)
-            // Set Apple's built-in override so the next launch picks the
-            // matching .lproj bundle. Today only English exists, so this
-            // is a no-op; added now so adding a second language later
-            // needs no changes here.
+            // Keep `AppleLanguages` in sync so system-provided strings
+            // (e.g. StoreKit dialogs) pick the new language on next launch.
             UserDefaults.standard.set([current.rawValue], forKey: "AppleLanguages")
+            L10n.setCurrentLanguage(current)
         }
     }
 
     init() {
         let stored = UserDefaults.standard.string(forKey: Self.storageKey)
-        self.current = stored.flatMap(AppLanguage.init(rawValue:)) ?? .english
+        let initial = stored.flatMap(AppLanguage.init(rawValue:)) ?? .english
+        self.current = initial
+        // didSet doesn't fire on init; seed the language bundle manually
+        // so first render uses the selected language.
+        L10n.setCurrentLanguage(initial)
     }
 }

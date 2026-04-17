@@ -17,6 +17,7 @@ private struct DiagnoseRequestBody: Codable {
     let imageBase64: String
     let mime: String
     let locale: String
+    let language: String
 }
 
 private struct RateLimitErrorBody: Codable {
@@ -42,7 +43,11 @@ final class DiagnosisClient {
         self.sharedSecret = sharedSecret
     }
 
-    func diagnose(image: UIImage, locale: String = Locale.current.identifier) async throws -> DiagnosisResponse {
+    func diagnose(
+        image: UIImage,
+        language: String,
+        locale: String = Locale.current.identifier,
+    ) async throws -> DiagnosisResponse {
         guard let jpeg = ImageResizer.resize(image) else {
             throw APIError.encodingFailed
         }
@@ -51,6 +56,7 @@ final class DiagnosisClient {
             imageBase64: jpeg.base64EncodedString(),
             mime: "image/jpeg",
             locale: locale,
+            language: language,
         )
         let bodyData = try JSONEncoder().encode(body)
 

@@ -68,7 +68,7 @@ struct DiagnosisResultView: View {
             case .severe: return .red
             }
         }()
-        return Text(response.severity.capitalized)
+        return Text(L10n.Severity.label(response.severity))
             .font(.caption.bold())
             .padding(.horizontal, 10)
             .padding(.vertical, 5)

@@ -33,7 +33,7 @@ final class DiagnoseViewModel: ObservableObject {
         resultRecord = nil
     }
 
-    func diagnose(context: ModelContext) async {
+    func diagnose(context: ModelContext, language: AppLanguage) async {
         guard let image = selectedImage else { return }
 
         let pre = entitlement.preflight()
@@ -50,7 +50,7 @@ final class DiagnoseViewModel: ObservableObject {
 
         phase = .analyzing
         do {
-            let response = try await client.diagnose(image: image)
+            let response = try await client.diagnose(image: image, language: language.rawValue)
             entitlement.commit(using: pre)
 
             let imageData = ImageResizer.resize(image)

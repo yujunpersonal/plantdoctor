@@ -4,6 +4,23 @@ export interface DiagnosisInput {
   imageBase64: string;
   mime: string;
   locale?: string;
+  language?: string;
+}
+
+const LANGUAGE_NAMES: Record<string, string> = {
+  en: "English",
+  "zh-Hans": "Simplified Chinese",
+  "zh-Hant": "Traditional Chinese",
+  de: "German",
+  fr: "French",
+  ja: "Japanese",
+  ko: "Korean",
+  es: "Spanish",
+};
+
+function languageName(code: string | undefined): string {
+  if (!code) return "English";
+  return LANGUAGE_NAMES[code] ?? "English";
 }
 
 export interface DiagnosisOutput {
@@ -23,8 +40,13 @@ export async function callOpenAI(
   input: DiagnosisInput,
 ): Promise<DiagnosisOutput> {
   const dataUrl = `data:${input.mime};base64,${input.imageBase64}`;
+  const lang = languageName(input.language);
   const userText =
     `Diagnose this plant. Respond in the structured JSON schema. ` +
+    `Write every user-visible string field — plantName, commonNames, condition, ` +
+    `causes, fixes, careTips, and disclaimer — in ${lang}. ` +
+    `The "severity" value MUST remain one of the English enum values: ` +
+    `"healthy", "mild", "moderate", "severe". ` +
     `User locale: ${input.locale ?? "en-US"}.`;
 
   const payload = {

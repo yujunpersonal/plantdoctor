@@ -6,6 +6,7 @@ struct DiagnoseView: View {
     @EnvironmentObject private var entitlement: EntitlementStore
     @EnvironmentObject private var creditsLedger: CreditsLedger
     @EnvironmentObject private var store: StoreManager
+    @EnvironmentObject private var language: LanguageStore
     @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel: DiagnoseViewModel
 
@@ -374,7 +375,7 @@ struct DiagnoseView: View {
     private var primaryCTA: some View {
         if viewModel.selectedImage != nil {
             Button {
-                Task { await viewModel.diagnose(context: modelContext) }
+                Task { await viewModel.diagnose(context: modelContext, language: language.current) }
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "sparkles")
