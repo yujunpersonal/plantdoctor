@@ -4,6 +4,24 @@ enum ImageResizer {
     static let maxDimension: CGFloat = 1024
     static let jpegQuality: CGFloat = 0.85
 
+    /// Downscale a UIImage for in-memory display. Keeps a reasonable
+    /// display resolution while avoiding multi-megapixel originals that
+    /// blow up layout and memory when rendered in SwiftUI.
+    static func downscaledForDisplay(_ image: UIImage, maxDimension: CGFloat = 1600) -> UIImage {
+        let fixed = image.fixedOrientation()
+        let size = fixed.size
+        let longest = max(size.width, size.height)
+        guard longest > maxDimension else { return fixed }
+        let scale = maxDimension / longest
+        let target = CGSize(width: floor(size.width * scale), height: floor(size.height * scale))
+        let format = UIGraphicsImageRendererFormat.default()
+        format.scale = 1
+        format.opaque = true
+        return UIGraphicsImageRenderer(size: target, format: format).image { _ in
+            fixed.draw(in: CGRect(origin: .zero, size: target))
+        }
+    }
+
     /// Resize the longest side of `image` to `maxDimension` (upscaling skipped)
     /// and return JPEG-encoded data.
     static func resize(_ image: UIImage, maxDimension: CGFloat = maxDimension, quality: CGFloat = jpegQuality) -> Data? {

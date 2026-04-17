@@ -80,7 +80,7 @@
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "20 diagnoses per day",
+              "description" : "10 diagnoses per day",
               "displayName" : "Silver",
               "locale" : "en_US"
             }
@@ -101,7 +101,7 @@
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "50 diagnoses per day",
+              "description" : "25 diagnoses per day",
               "displayName" : "Gold",
               "locale" : "en_US"
             }

@@ -23,17 +23,15 @@ struct HistoryDetailView: View {
                 }
             }
         }
-        .confirmationDialog(
-            "Delete this diagnosis?",
-            isPresented: $showDeleteConfirm,
-            titleVisibility: .visible,
-        ) {
+        .alert("Delete this diagnosis?", isPresented: $showDeleteConfirm) {
             Button("Delete", role: .destructive) {
                 modelContext.delete(record)
                 try? modelContext.save()
                 dismiss()
             }
             Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This diagnosis will be removed from your history. This can't be undone.")
         }
     }
 

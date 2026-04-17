@@ -33,8 +33,16 @@ enum SubscriptionTier: String, CaseIterable {
 
     var dailyQuota: Int {
         switch self {
-        case .silver: return 20
-        case .gold: return 50
+        case .silver: return 10
+        case .gold: return 25
+        }
+    }
+
+    /// Ordering for upgrade/downgrade checks. Higher rank = higher tier.
+    var rank: Int {
+        switch self {
+        case .silver: return 1
+        case .gold: return 2
         }
     }
 

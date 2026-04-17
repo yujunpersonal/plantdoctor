@@ -8,6 +8,7 @@ final class StoreManager: ObservableObject {
     @Published private(set) var consumables: [Product] = []
     @Published private(set) var activeTier: SubscriptionTier?
     @Published private(set) var isPurchasing = false
+    @Published private(set) var isLoadingProducts = false
     @Published var purchaseError: String?
 
     private var updatesTask: Task<Void, Never>?
@@ -33,6 +34,8 @@ final class StoreManager: ObservableObject {
     // MARK: - Loading
 
     func loadProducts() async {
+        isLoadingProducts = true
+        defer { isLoadingProducts = false }
         do {
             let products = try await Product.products(for: ProductID.all)
             let subs = products.filter { $0.type == .autoRenewable }
@@ -84,14 +87,15 @@ final class StoreManager: ObservableObject {
     // MARK: - Entitlement refresh
 
     func refreshEntitlements() async {
-        var tier: SubscriptionTier?
+        var best: SubscriptionTier?
         for await entitlement in Transaction.currentEntitlements {
             guard case .verified(let tx) = entitlement else { continue }
+            guard tx.revocationDate == nil else { continue }
             if let t = SubscriptionTier.from(productID: tx.productID) {
-                if tier == nil || (t == .gold) { tier = t }
+                if best == nil || t.rank > best!.rank { best = t }
             }
         }
-        self.activeTier = tier
+        self.activeTier = best
     }
 
     // MARK: - Transaction processing
@@ -107,6 +111,14 @@ final class StoreManager: ObservableObject {
     private func handle(transaction tx: Transaction) async {
         if let amount = ProductID.creditAmount(for: tx.productID) {
             credits?.add(credits: amount)
+        }
+        // Optimistic tier bump so UI reflects the purchase immediately,
+        // even if `currentEntitlements` hasn't caught up yet (StoreKit
+        // local testing can lag on crossgrades within a sub group).
+        if tx.revocationDate == nil, let t = SubscriptionTier.from(productID: tx.productID) {
+            if activeTier == nil || t.rank > (activeTier?.rank ?? 0) {
+                activeTier = t
+            }
         }
         await refreshEntitlements()
     }
