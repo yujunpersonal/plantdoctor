@@ -11,23 +11,14 @@ enum APIError: Error, LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .offline:
-            return "You appear to be offline. Check your connection and try again."
-        case .encodingFailed:
-            return "We couldn't prepare the photo for upload. Try a different image."
-        case .authFailed:
-            return "Authentication failed. Please update the app."
+        case .offline: return L10n.Errors.offline
+        case .encodingFailed: return L10n.Errors.encodingFailed
+        case .authFailed: return L10n.Errors.authFailed
         case .rateLimited(let scope, _):
-            if scope == "device" {
-                return "You've hit the per-device hourly limit. Try again in a bit."
-            }
-            return "Our servers are busy. Please try again in a minute."
-        case .payloadTooLarge:
-            return "The photo is too large. Try a smaller image."
-        case .server:
-            return "Diagnosis service is temporarily unavailable. Try again shortly."
-        case .decoding:
-            return "We got an unexpected response. Please try again."
+            return scope == "device" ? L10n.Errors.rateLimitedDevice : L10n.Errors.rateLimitedGlobal
+        case .payloadTooLarge: return L10n.Errors.payloadTooLarge
+        case .server: return L10n.Errors.server
+        case .decoding: return L10n.Errors.decoding
         }
     }
 }

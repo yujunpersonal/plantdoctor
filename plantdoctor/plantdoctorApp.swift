@@ -6,6 +6,7 @@ struct plantdoctorApp: App {
     @StateObject private var credits = CreditsLedger()
     @StateObject private var store = StoreManager()
     @StateObject private var entitlement: EntitlementStore
+    @StateObject private var language = LanguageStore()
 
     private let modelContainer: ModelContainer
 
@@ -35,6 +36,8 @@ struct plantdoctorApp: App {
                 .environmentObject(credits)
                 .environmentObject(store)
                 .environmentObject(entitlement)
+                .environmentObject(language)
+                .environment(\.locale, language.current.locale)
                 .tint(Theme.leaf)
                 .task {
                     store.start()

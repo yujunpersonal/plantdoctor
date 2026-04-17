@@ -20,23 +20,23 @@ struct DiagnosisResultView: View {
 
                 headerBlock
 
-                DetailSection(title: "Likely causes", items: response.causes, systemImage: "magnifyingglass")
-                DetailSection(title: "What to do", items: response.fixes, systemImage: "wrench.and.screwdriver.fill")
-                DetailSection(title: "Care tips", items: response.careTips, systemImage: "leaf.fill")
+                DetailSection(title: L10n.Result.sectionCauses, items: response.causes, systemImage: "magnifyingglass")
+                DetailSection(title: L10n.Result.sectionFixes, items: response.fixes, systemImage: "wrench.and.screwdriver.fill")
+                DetailSection(title: L10n.Result.sectionCareTips, items: response.careTips, systemImage: "leaf.fill")
 
                 Text(response.disclaimer)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .padding(.top, 8)
 
-                Button("Done", action: onDone)
+                Button(L10n.Result.done, action: onDone)
                     .buttonStyle(LeafButtonStyle())
                     .padding(.top, 8)
             }
             .padding(20)
         }
         .background(Theme.cream.ignoresSafeArea())
-        .navigationTitle("Diagnosis")
+        .navigationTitle(L10n.Result.navTitle)
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -78,7 +78,7 @@ struct DiagnosisResultView: View {
     }
 
     private var confidencePill: some View {
-        Text("Confidence \(Int(response.confidence * 100))%")
+        Text(L10n.Result.confidence(Int(response.confidence * 100)))
             .font(.caption)
             .foregroundStyle(.secondary)
             .padding(.horizontal, 10)

@@ -59,8 +59,3 @@ enum AppLimits {
     static let freeStarterCredits = 10
     static let clientHourlyCap = 100
 }
-
-enum LegalLinks {
-    static let eula = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-    static let privacy = URL(string: "https://support.buddy.cn/en/privacy-policy")!
-}

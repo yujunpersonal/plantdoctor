@@ -23,15 +23,15 @@ struct HistoryDetailView: View {
                 }
             }
         }
-        .alert("Delete this diagnosis?", isPresented: $showDeleteConfirm) {
-            Button("Delete", role: .destructive) {
+        .alert(L10n.History.deleteConfirmTitle, isPresented: $showDeleteConfirm) {
+            Button(L10n.History.delete, role: .destructive) {
                 modelContext.delete(record)
                 try? modelContext.save()
                 dismiss()
             }
-            Button("Cancel", role: .cancel) {}
+            Button(L10n.History.cancel, role: .cancel) {}
         } message: {
-            Text("This diagnosis will be removed from your history. This can't be undone.")
+            Text(L10n.History.deleteConfirmMessage)
         }
     }
 
@@ -49,7 +49,7 @@ struct HistoryDetailView: View {
             causes: record.causes,
             fixes: record.fixes,
             careTips: record.careTips,
-            disclaimer: "Stored diagnosis. AI guidance, not a substitute for a professional.",
+            disclaimer: L10n.Result.storedDisclaimer,
         )
     }
 }

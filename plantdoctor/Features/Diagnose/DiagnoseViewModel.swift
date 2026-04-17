@@ -64,7 +64,7 @@ final class DiagnoseViewModel: ObservableObject {
         } catch let error as APIError {
             phase = .failed(error.localizedDescription)
         } catch {
-            phase = .failed("Something went wrong. Please try again.")
+            phase = .failed(L10n.Errors.generic)
         }
     }
 }

@@ -29,10 +29,10 @@ struct DiagnoseView: View {
                 .sheet(isPresented: $viewModel.showPaywall) {
                     PaywallView()
                 }
-                .alert("Slow down a bit", isPresented: $viewModel.showHourlyCapAlert) {
-                    Button("OK", role: .cancel) {}
+                .alert(L10n.Home.hourlyCapAlertTitle, isPresented: $viewModel.showHourlyCapAlert) {
+                    Button(L10n.Paywall.ok, role: .cancel) {}
                 } message: {
-                    Text("You've done 100 diagnoses in the last hour. Take a short break and try again.")
+                    Text(L10n.Home.hourlyCapAlertMessage)
                 }
                 .navigationDestination(item: $viewModel.result) { response in
                     DiagnosisResultView(
@@ -62,9 +62,9 @@ struct DiagnoseView: View {
 
     private var tierName: String {
         switch store.activeTier {
-        case .some(.gold): return "Gold"
-        case .some(.silver): return "Silver"
-        case .none: return "Free"
+        case .some(.gold): return L10n.Tier.gold
+        case .some(.silver): return L10n.Tier.silver
+        case .none: return L10n.Tier.free
         }
     }
 
@@ -93,13 +93,13 @@ struct DiagnoseView: View {
                     .foregroundStyle(.white)
                     .frame(width: 22, height: 22)
                     .background(Circle().fill(tierAccent))
-                Text("\(tierName) plan")
+                Text(L10n.Home.planLabel(tierName))
                     .font(.subheadline.bold())
                     .foregroundStyle(.primary)
                 Spacer(minLength: 0)
             }
             VStack(alignment: .leading, spacing: 4) {
-                Text("\(remaining) of \(tier.dailyQuota) today")
+                Text(L10n.Home.remainingToday(remaining, tier.dailyQuota))
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(.secondary)
                 GeometryReader { geo in
@@ -133,7 +133,7 @@ struct DiagnoseView: View {
                 HStack(spacing: 6) {
                     Image(systemName: "leaf.circle.fill")
                         .foregroundStyle(Theme.leaf)
-                    Text("Credits")
+                    Text(L10n.Home.creditsChipLabel)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     Spacer(minLength: 0)
@@ -173,10 +173,10 @@ struct DiagnoseView: View {
                         .foregroundStyle(Theme.leaf)
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("\(creditsLedger.creditBalance) credits")
+                    Text(L10n.Home.creditsCountTitle(creditsLedger.creditBalance))
                         .font(.body.bold())
                         .foregroundStyle(.primary)
-                    Text("Tap to get more or go unlimited")
+                    Text(L10n.Home.creditsUpsellSubtitle)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -244,10 +244,10 @@ struct DiagnoseView: View {
 
     private var heroTitle: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Diagnose your plant")
+            Text(L10n.Home.heroTitle)
                 .font(.largeTitle.bold())
                 .foregroundStyle(.primary)
-            Text("Snap a photo and get care tips in seconds.")
+            Text(L10n.Home.heroSubtitle)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
@@ -314,10 +314,10 @@ struct DiagnoseView: View {
                 .shadow(color: Theme.leaf.opacity(0.15), radius: 10, x: 0, y: 6)
 
                 VStack(spacing: 4) {
-                    Text("Add a plant photo")
+                    Text(L10n.Home.emptyPreviewTitle)
                         .font(.title3.bold())
                         .foregroundStyle(.primary)
-                    Text("Close-up, well-lit, affected leaves included.")
+                    Text(L10n.Home.emptyPreviewSubtitle)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
@@ -332,12 +332,12 @@ struct DiagnoseView: View {
     private var pickerTiles: some View {
         HStack(spacing: 12) {
             Button { showCamera = true } label: {
-                pickerTile(icon: "camera.fill", title: "Camera", subtitle: "Take a photo")
+                pickerTile(icon: "camera.fill", title: L10n.Home.cameraTitle, subtitle: L10n.Home.cameraSubtitle)
             }
             .buttonStyle(.plain)
 
             PhotosPicker(selection: $photosItem, matching: .images, photoLibrary: .shared()) {
-                pickerTile(icon: "photo.on.rectangle.angled", title: "Library", subtitle: "From your photos")
+                pickerTile(icon: "photo.on.rectangle.angled", title: L10n.Home.libraryTitle, subtitle: L10n.Home.librarySubtitle)
             }
             .buttonStyle(.plain)
         }
@@ -378,7 +378,7 @@ struct DiagnoseView: View {
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "sparkles")
-                    Text("Analyze plant")
+                    Text(L10n.Home.analyzeCTA)
                 }
             }
             .buttonStyle(LeafButtonStyle())
@@ -391,14 +391,14 @@ struct DiagnoseView: View {
             HStack(spacing: 8) {
                 Image(systemName: "lightbulb.fill")
                     .foregroundStyle(.orange)
-                Text("Photo tips")
+                Text(L10n.Home.photoTipsHeader)
                     .font(.subheadline.bold())
                     .foregroundStyle(.primary)
             }
             VStack(alignment: .leading, spacing: 6) {
-                tipRow("Fill the frame with the plant")
-                tipRow("Include affected leaves up close")
-                tipRow("Natural daylight works best")
+                tipRow(L10n.Home.photoTip1)
+                tipRow(L10n.Home.photoTip2)
+                tipRow(L10n.Home.photoTip3)
             }
         }
         .padding(14)
@@ -444,10 +444,10 @@ struct DiagnoseView: View {
                     .foregroundStyle(Theme.leaf)
             }
             VStack(spacing: 4) {
-                Text("Analyzing your plant…")
+                Text(L10n.Home.analyzingTitle)
                     .font(.headline)
                     .foregroundStyle(.primary)
-                Text("Reading leaves, color, and texture.")
+                Text(L10n.Home.analyzingSubtitle)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -472,13 +472,13 @@ struct DiagnoseView: View {
                     .font(.system(size: 32))
                     .foregroundStyle(.orange)
             }
-            Text("Couldn't analyze")
+            Text(L10n.Home.failureTitle)
                 .font(.title3.bold())
             Text(message)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
                 .padding(.horizontal, 24)
-            Button("Try again") { viewModel.phase = .idle }
+            Button(L10n.Home.tryAgain) { viewModel.phase = .idle }
                 .buttonStyle(LeafButtonStyle())
                 .padding(.horizontal, 20)
         }

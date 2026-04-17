@@ -16,7 +16,7 @@ struct HistoryListView: View {
                     list
                 }
             }
-            .navigationTitle("History")
+            .navigationTitle(L10n.History.navTitle)
             .navigationBarTitleDisplayMode(.large)
             .background(Theme.cream.ignoresSafeArea())
         }
@@ -50,7 +50,7 @@ struct HistoryListView: View {
 
     private var sectionHeader: some View {
         HStack {
-            Text("Recent diagnoses")
+            Text(L10n.History.sectionHeader)
                 .font(.subheadline.bold())
                 .foregroundStyle(.primary)
             Spacer()
@@ -76,9 +76,9 @@ struct HistoryListView: View {
                         .foregroundStyle(Theme.leaf)
                 }
                 VStack(spacing: 6) {
-                    Text("No diagnoses yet")
+                    Text(L10n.History.emptyTitle)
                         .font(.title3.bold())
-                    Text("Your past plant diagnoses will appear here and sync via iCloud.")
+                    Text(L10n.History.emptyMessage)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
@@ -107,12 +107,12 @@ private struct HistoryCard: View {
             VStack(alignment: .leading, spacing: 6) {
                 HStack(spacing: 6) {
                     severityDot
-                    Text(record.plantName.isEmpty ? "Unknown plant" : record.plantName)
+                    Text(record.plantName.isEmpty ? L10n.History.unknownPlant : record.plantName)
                         .font(.body.bold())
                         .foregroundStyle(.primary)
                         .lineLimit(1)
                 }
-                Text(record.condition.isEmpty ? "No condition detected" : record.condition)
+                Text(record.condition.isEmpty ? L10n.History.noCondition : record.condition)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)

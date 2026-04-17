@@ -28,18 +28,18 @@ struct PaywallView: View {
                 .padding(20)
             }
             .background(Theme.cream.ignoresSafeArea())
-            .navigationTitle("Go Unlimited")
+            .navigationTitle(L10n.Paywall.navTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Close") { dismiss() }
+                    Button(L10n.Paywall.close) { dismiss() }
                 }
             }
-            .alert("Purchase", isPresented: Binding(
+            .alert(L10n.Paywall.purchaseAlertTitle, isPresented: Binding(
                 get: { store.purchaseError != nil },
                 set: { if !$0 { store.purchaseError = nil } }
             )) {
-                Button("OK") { store.purchaseError = nil }
+                Button(L10n.Paywall.ok) { store.purchaseError = nil }
             } message: {
                 Text(store.purchaseError ?? "")
             }
@@ -51,13 +51,13 @@ struct PaywallView: View {
             Image(systemName: "leaf.fill")
                 .font(.system(size: 54))
                 .foregroundStyle(Theme.leaf)
-            Text("Keep Leafwise Growing")
+            Text(L10n.Paywall.headerTitle)
                 .font(.title2.bold())
-            Text("Subscribe for daily diagnoses, or top up with credits.")
+            Text(L10n.Paywall.headerSubtitle)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-            Text("You have \(credits.creditBalance) credits")
+            Text(L10n.Paywall.youHaveCredits(credits.creditBalance))
                 .font(.footnote)
                 .foregroundStyle(Theme.leaf)
         }
@@ -66,7 +66,7 @@ struct PaywallView: View {
     private var loadingState: some View {
         VStack(spacing: 10) {
             ProgressView()
-            Text("Loading plans…")
+            Text(L10n.Paywall.loadingProducts)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
         }
@@ -79,13 +79,13 @@ struct PaywallView: View {
             Image(systemName: "exclamationmark.triangle")
                 .font(.title2)
                 .foregroundStyle(.orange)
-            Text("Plans unavailable")
+            Text(L10n.Paywall.plansUnavailableTitle)
                 .font(.headline)
-            Text("We couldn't reach the App Store. Check your connection and try again.")
+            Text(L10n.Paywall.plansUnavailableMessage)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-            Button("Retry") {
+            Button(L10n.Paywall.retry) {
                 Task { await store.loadProducts() }
             }
             .buttonStyle(.borderedProminent)
@@ -97,7 +97,7 @@ struct PaywallView: View {
 
     private var subscriptionsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionTitle("Subscriptions")
+            sectionTitle(L10n.Paywall.subscriptionsSection)
             ForEach(store.subscriptions) { product in
                 productCard(product)
             }
@@ -106,7 +106,7 @@ struct PaywallView: View {
 
     private var creditsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionTitle("Credit Packs")
+            sectionTitle(L10n.Paywall.creditPacksSection)
             ForEach(store.consumables) { product in
                 productCard(product)
             }
@@ -160,9 +160,9 @@ struct PaywallView: View {
                 .font(.body.bold())
                 .foregroundStyle(Theme.leaf)
         case .current:
-            badge(text: "Current", tint: Theme.leaf)
+            badge(text: L10n.Paywall.currentBadge, tint: Theme.leaf)
         case .lowerTier:
-            badge(text: "Included", tint: .secondary)
+            badge(text: L10n.Paywall.includedBadge, tint: .secondary)
         }
     }
 
@@ -201,10 +201,10 @@ struct PaywallView: View {
 
     private func subtitle(for product: Product) -> String {
         if let tier = SubscriptionTier.from(productID: product.id) {
-            return "\(tier.dailyQuota) diagnoses/day · monthly"
+            return L10n.Paywall.subscriptionSubtitle(tier.dailyQuota)
         }
         if let amount = ProductID.creditAmount(for: product.id) {
-            return "\(amount) diagnose credits"
+            return L10n.Paywall.creditPackSubtitle(amount)
         }
         return product.description
     }
@@ -213,7 +213,7 @@ struct PaywallView: View {
         Button {
             Task { await store.restore() }
         } label: {
-            Text("Restore Purchases")
+            Text(L10n.Paywall.restorePurchases)
                 .font(.subheadline)
                 .foregroundStyle(Theme.leaf)
         }
@@ -221,13 +221,13 @@ struct PaywallView: View {
 
     private var legalFooter: some View {
         VStack(spacing: 6) {
-            Text("Subscriptions auto-renew monthly until cancelled in App Store settings. Credit packs are one-time purchases.")
+            Text(L10n.Paywall.legalDisclaimer)
                 .font(.caption2)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
             HStack(spacing: 14) {
-                Link("Terms (EULA)", destination: LegalLinks.eula)
-                Link("Privacy Policy", destination: LegalLinks.privacy)
+                Link(L10n.Paywall.termsEula, destination: L10n.Legal.eulaURL)
+                Link(L10n.Paywall.privacyPolicy, destination: L10n.Legal.privacyURL)
             }
             .font(.caption2)
             .foregroundStyle(Theme.leaf)

@@ -43,7 +43,7 @@ final class StoreManager: ObservableObject {
             self.subscriptions = subs.sorted { priceSort($0, $1) }
             self.consumables = cons.sorted { priceSort($0, $1) }
         } catch {
-            purchaseError = "Couldn't load products. Please check your connection."
+            purchaseError = L10n.Errors.productsLoadFailed
         }
     }
 
@@ -80,7 +80,7 @@ final class StoreManager: ObservableObject {
             try await AppStore.sync()
             await refreshEntitlements()
         } catch {
-            purchaseError = "Restore failed: \(error.localizedDescription)"
+            purchaseError = L10n.Errors.restoreFailed(error.localizedDescription)
         }
     }
 

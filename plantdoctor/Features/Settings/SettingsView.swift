@@ -4,6 +4,7 @@ struct SettingsView: View {
     @EnvironmentObject private var store: StoreManager
     @EnvironmentObject private var credits: CreditsLedger
     @EnvironmentObject private var entitlement: EntitlementStore
+    @EnvironmentObject private var language: LanguageStore
     @State private var showPaywall = false
 
     var body: some View {
@@ -14,6 +15,7 @@ struct SettingsView: View {
                         planCard
                         statsRow
                         actionsCard
+                        preferencesCard
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 16)
@@ -23,7 +25,7 @@ struct SettingsView: View {
                     .padding(.bottom, 8)
             }
             .background(Theme.cream.ignoresSafeArea())
-            .navigationTitle("Settings")
+            .navigationTitle(L10n.Settings.navTitle)
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $showPaywall) { PaywallView() }
         }
@@ -43,7 +45,7 @@ struct SettingsView: View {
                         .foregroundStyle(tierAccent)
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Current plan")
+                    Text(L10n.Settings.currentPlan)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     Text(tierLabel)
@@ -52,7 +54,7 @@ struct SettingsView: View {
                 }
                 Spacer()
                 if store.activeTier == nil {
-                    Text("FREE")
+                    Text(L10n.Settings.freeBadge)
                         .font(.caption2.bold())
                         .padding(.horizontal, 8).padding(.vertical, 4)
                         .background(Theme.leafLight)
@@ -64,7 +66,7 @@ struct SettingsView: View {
             if let tier = store.activeTier {
                 dailyProgress(for: tier)
             } else {
-                Text("Upgrade for daily diagnoses, or top up with credit packs.")
+                Text(L10n.Settings.upgradePrompt)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -87,11 +89,11 @@ struct SettingsView: View {
         let progress = tier.dailyQuota > 0 ? Double(used) / Double(tier.dailyQuota) : 0
         return VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("Today")
+                Text(L10n.Settings.todayLabel)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 Spacer()
-                Text("\(remaining) of \(tier.dailyQuota) left")
+                Text(L10n.Settings.remainingLeft(remaining, tier.dailyQuota))
                     .font(.footnote.monospacedDigit())
                     .foregroundStyle(.primary)
             }
@@ -111,8 +113,8 @@ struct SettingsView: View {
 
     private var statsRow: some View {
         HStack(spacing: 12) {
-            statPill(icon: "leaf.circle.fill", label: "Credits", value: "\(credits.creditBalance)")
-            statPill(icon: "bolt.circle.fill", label: "Today left", value: todayLeftText)
+            statPill(icon: "leaf.circle.fill", label: L10n.Settings.creditsStatLabel, value: "\(credits.creditBalance)")
+            statPill(icon: "bolt.circle.fill", label: L10n.Settings.todayLeftStatLabel, value: todayLeftText)
         }
     }
 
@@ -145,7 +147,7 @@ struct SettingsView: View {
         if let tier = store.activeTier {
             return "\(credits.subRemaining(for: tier))"
         }
-        return "—"
+        return L10n.Settings.todayLeftNone
     }
 
     // MARK: - Actions
@@ -155,8 +157,8 @@ struct SettingsView: View {
             Button { showPaywall = true } label: {
                 actionRow(
                     icon: "sparkles",
-                    title: store.activeTier == nil ? "Upgrade or buy credits" : "Manage plan",
-                    subtitle: "Subscriptions and one-time packs",
+                    title: store.activeTier == nil ? L10n.Settings.upgradeOrBuy : L10n.Settings.managePlan,
+                    subtitle: L10n.Settings.manageSubtitle,
                     tint: Theme.leaf,
                     showChevron: true
                 )
@@ -168,8 +170,8 @@ struct SettingsView: View {
             Button { Task { await store.restore() } } label: {
                 actionRow(
                     icon: "arrow.clockwise",
-                    title: "Restore purchases",
-                    subtitle: "Recover previous subscriptions and credits",
+                    title: L10n.Settings.restorePurchases,
+                    subtitle: L10n.Settings.restoreSubtitle,
                     tint: Theme.soil,
                     showChevron: false
                 )
@@ -186,8 +188,40 @@ struct SettingsView: View {
         )
     }
 
+    private var preferencesCard: some View {
+        NavigationLink { LanguagePickerView() } label: {
+            HStack(spacing: 14) {
+                iconBubble("globe", tint: Theme.leaf)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(L10n.Settings.languageRowTitle)
+                        .font(.body)
+                        .foregroundStyle(.primary)
+                    Text(language.current.displayName)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(.white)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(Theme.leafLight, lineWidth: 1)
+        )
+    }
+
     private var footer: some View {
-        Text("Leafwise · v\(appVersion)")
+        Text(L10n.Settings.footer(appVersion))
             .font(.caption2.monospacedDigit())
             .foregroundStyle(.tertiary)
     }
@@ -241,9 +275,9 @@ struct SettingsView: View {
 
     private var tierLabel: String {
         switch store.activeTier {
-        case .some(.gold): return "Gold"
-        case .some(.silver): return "Silver"
-        case .none: return "Free"
+        case .some(.gold): return L10n.Tier.gold
+        case .some(.silver): return L10n.Tier.silver
+        case .none: return L10n.Tier.free
         }
     }
 

@@ -7,7 +7,7 @@ struct PhotoPickerSheet: View {
 
     var body: some View {
         PhotosPicker(selection: $selection, matching: .images, photoLibrary: .shared()) {
-            Label("Choose from Library", systemImage: "photo.on.rectangle")
+            Label(L10n.Home.chooseFromLibrary, systemImage: "photo.on.rectangle")
         }
         .onChange(of: selection) { _, newValue in
             guard let newValue else { return }

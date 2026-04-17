@@ -6,13 +6,13 @@ struct RootView: View {
     var body: some View {
         TabView {
             DiagnoseView(entitlement: entitlement)
-                .tabItem { Label("Diagnose", systemImage: "leaf.fill") }
+                .tabItem { Label(L10n.Tabs.diagnose, systemImage: "leaf.fill") }
 
             HistoryListView()
-                .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
+                .tabItem { Label(L10n.Tabs.history, systemImage: "clock.arrow.circlepath") }
 
             SettingsView()
-                .tabItem { Label("Settings", systemImage: "gearshape.fill") }
+                .tabItem { Label(L10n.Tabs.settings, systemImage: "gearshape.fill") }
         }
     }
 }
