@@ -1,0 +1,122 @@
+{
+  "identifier" : "LEAFWISE_STOREKIT",
+  "nonRenewingSubscriptions" : [],
+  "products" : [
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "PD_CREDITS_100",
+      "localizations" : [
+        {
+          "description" : "100 plant diagnose credits",
+          "displayName" : "100 Credits",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "cn.buddy.plantdoctor.credits.100",
+      "referenceName" : "100 Credits",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "PD_CREDITS_500",
+      "localizations" : [
+        {
+          "description" : "500 plant diagnose credits",
+          "displayName" : "500 Credits",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "cn.buddy.plantdoctor.credits.500",
+      "referenceName" : "500 Credits",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "PD_CREDITS_1200",
+      "localizations" : [
+        {
+          "description" : "1200 plant diagnose credits",
+          "displayName" : "1200 Credits",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "cn.buddy.plantdoctor.credits.1200",
+      "referenceName" : "1200 Credits",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "1234567890",
+    "_developerTeamID" : "NV2M6XHLDB",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [],
+    "_timeRate" : 1
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "LEAFWISE_GROUP",
+      "localizations" : [
+        {
+          "description" : "Leafwise Plus",
+          "displayName" : "Leafwise Plus",
+          "locale" : "en_US"
+        }
+      ],
+      "name" : "Leafwise Plus",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "2.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "PD_SUB_SILVER",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "20 diagnoses per day",
+              "displayName" : "Silver",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "cn.buddy.plantdoctor.sub.silver",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Silver",
+          "subscriptionGroupID" : "LEAFWISE_GROUP",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "PD_SUB_GOLD",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "50 diagnoses per day",
+              "displayName" : "Gold",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "cn.buddy.plantdoctor.sub.gold",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Gold",
+          "subscriptionGroupID" : "LEAFWISE_GROUP",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

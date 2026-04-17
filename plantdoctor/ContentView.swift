@@ -1,24 +1,18 @@
-//
-//  ContentView.swift
-//  plantdoctor
-//
-//  Created by Peter Yu on 4/17/26.
-//
-
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+struct RootView: View {
+    let entitlement: EntitlementStore
 
-#Preview {
-    ContentView()
+    var body: some View {
+        TabView {
+            DiagnoseView(entitlement: entitlement)
+                .tabItem { Label("Diagnose", systemImage: "leaf.fill") }
+
+            HistoryListView()
+                .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
+
+            SettingsView()
+                .tabItem { Label("Settings", systemImage: "gearshape.fill") }
+        }
+    }
 }

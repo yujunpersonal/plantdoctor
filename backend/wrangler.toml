@@ -1,0 +1,28 @@
+name = "plantdoctor-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+# Rate limiting via native CF bindings (period max = 60s).
+# Hourly limits are approximated via per-minute buckets:
+#   Global 10000/hr  -> 200/60s (~12k/hr burst ceiling)
+#   Device 100/hr    -> 2/60s   (~120/hr burst ceiling)
+# The iOS client enforces an additional hard 100/hour rolling cap per device.
+
+[[unsafe.bindings]]
+name = "RL_GLOBAL"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 200, period = 60 }
+
+[[unsafe.bindings]]
+name = "RL_DEVICE"
+type = "ratelimit"
+namespace_id = "1002"
+simple = { limit = 2, period = 60 }
+
+[vars]
+# Non-secret vars go here. Secrets are set via `wrangler secret put`.
+ALLOWED_ORIGIN = "*"
+
+[observability]
+enabled = true
