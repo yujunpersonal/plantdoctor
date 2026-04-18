@@ -182,6 +182,15 @@ enum L10n {
         static var languageRestartNote: String {
             s("settings.language.restartNote", "Language changes take effect after relaunching the app.")
         }
+        static var icloudWarningTitle: String {
+            s("settings.icloud.title", "iCloud sync unavailable")
+        }
+        static var icloudWarningMessage: String {
+            s("settings.icloud.message", "Your history won’t sync across devices or survive reinstall. Sign in to iCloud in Settings to enable sync.")
+        }
+        static var icloudOpenSettings: String {
+            s("settings.icloud.openSettings", "Open Settings")
+        }
     }
 
     // MARK: - Severity

@@ -7,6 +7,7 @@ struct plantdoctorApp: App {
     @StateObject private var store = StoreManager()
     @StateObject private var entitlement: EntitlementStore
     @StateObject private var language = LanguageStore()
+    @StateObject private var cloudStatus = CloudKitStatus()
 
     private let modelContainer: ModelContainer
 
@@ -38,6 +39,7 @@ struct plantdoctorApp: App {
                 .environmentObject(store)
                 .environmentObject(entitlement)
                 .environmentObject(language)
+                .environmentObject(cloudStatus)
                 .environment(\.locale, language.current.locale)
                 .tint(Theme.leaf)
                 .task {

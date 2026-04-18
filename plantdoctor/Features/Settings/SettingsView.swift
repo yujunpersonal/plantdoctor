@@ -5,6 +5,7 @@ struct SettingsView: View {
     @EnvironmentObject private var credits: CreditsLedger
     @EnvironmentObject private var entitlement: EntitlementStore
     @EnvironmentObject private var language: LanguageStore
+    @EnvironmentObject private var cloudStatus: CloudKitStatus
     @State private var showPaywall = false
 
     var body: some View {
@@ -12,6 +13,9 @@ struct SettingsView: View {
             ZStack(alignment: .bottom) {
                 ScrollView {
                     VStack(spacing: 20) {
+                        if !cloudStatus.isAvailable && cloudStatus.state != .unknown {
+                            iCloudWarningCard
+                        }
                         planCard
                         statsRow
                         actionsCard
@@ -29,6 +33,50 @@ struct SettingsView: View {
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $showPaywall) { PaywallView() }
         }
+    }
+
+    // MARK: - iCloud warning
+
+    private var iCloudWarningCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 10) {
+                Image(systemName: "exclamationmark.icloud.fill")
+                    .font(.title3)
+                    .foregroundStyle(.orange)
+                Text(L10n.Settings.icloudWarningTitle)
+                    .font(.subheadline.bold())
+                    .foregroundStyle(.primary)
+                Spacer(minLength: 0)
+            }
+            Text(L10n.Settings.icloudWarningMessage)
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            Button {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            } label: {
+                Text(L10n.Settings.icloudOpenSettings)
+                    .font(.footnote.bold())
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .background(Color.orange.opacity(0.15))
+                    .foregroundStyle(.orange)
+                    .clipShape(Capsule())
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color.orange.opacity(0.08))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(Color.orange.opacity(0.35), lineWidth: 1)
+        )
     }
 
     // MARK: - Plan card
