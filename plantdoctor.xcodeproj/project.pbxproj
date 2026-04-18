@@ -409,6 +409,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Leafwise;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Leafwise uses the camera to photograph plants for AI diagnosis.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Leafwise reads photos you pick for AI plant diagnosis.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -445,6 +446,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Leafwise;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Leafwise uses the camera to photograph plants for AI diagnosis.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Leafwise reads photos you pick for AI plant diagnosis.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

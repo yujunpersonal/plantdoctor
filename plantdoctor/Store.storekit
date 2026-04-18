@@ -75,7 +75,7 @@
           "codeOffers" : [],
           "displayPrice" : "2.99",
           "familyShareable" : false,
-          "groupNumber" : 1,
+          "groupNumber" : 2,
           "internalID" : "PD_SUB_SILVER",
           "introductoryOffer" : null,
           "localizations" : [
@@ -96,7 +96,7 @@
           "codeOffers" : [],
           "displayPrice" : "4.99",
           "familyShareable" : false,
-          "groupNumber" : 2,
+          "groupNumber" : 1,
           "internalID" : "PD_SUB_GOLD",
           "introductoryOffer" : null,
           "localizations" : [
