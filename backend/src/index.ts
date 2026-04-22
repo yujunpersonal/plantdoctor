@@ -10,7 +10,7 @@ export interface Env {
   ALLOWED_ORIGIN: string;
 }
 
-const MAX_BODY_BYTES = 4 * 1024 * 1024; // 4MB ceiling after 1024px resize
+const MAX_BODY_BYTES = 10 * 1024 * 1024; // 10MB ceiling — up to 3 x 1024px images base64
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
@@ -50,8 +50,12 @@ export default {
       return json({ error: "bad_json" }, 400);
     }
 
-    if (!input.imageBase64 || !input.mime) {
+    const hasImages = Array.isArray(input.images) && input.images.length > 0;
+    if ((!hasImages && !input.imageBase64) || !input.mime) {
       return json({ error: "missing_fields" }, 400);
+    }
+    if (hasImages && input.images!.length > 3) {
+      return json({ error: "too_many_images" }, 400);
     }
 
     try {

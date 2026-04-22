@@ -222,10 +222,31 @@ enum L10n {
         static func confidence(_ pct: Int) -> String {
             String(format: s("result.confidence", "Confidence %lld%%"), pct)
         }
+        static func alsoKnownAs(_ names: String) -> String {
+            String(format: s("result.alsoKnownAs", "Also known as %@"), names)
+        }
+        static var sectionAbout: String { s("result.section.about", "About this plant") }
         static var sectionCauses: String { s("result.section.causes", "Likely causes") }
         static var sectionFixes: String { s("result.section.fixes", "What to do") }
         static var sectionCareTips: String { s("result.section.careTips", "Care tips") }
+        static var sectionPlantCare: String { s("result.section.plantCare", "Plant care") }
+        static var careLight: String { s("result.care.light", "Light") }
+        static var careWater: String { s("result.care.water", "Water") }
+        static var careSoil: String { s("result.care.soil", "Soil & feeding") }
+        static var careTemperature: String { s("result.care.temperature", "Temperature") }
+        static var careToxicity: String { s("result.care.toxicity", "Toxicity") }
         static var done: String { s("result.done", "Done") }
+        static var rediagnoseTitle: String { s("result.rediagnose.title", "Not the right plant?") }
+        static var rediagnoseSubtitle: String {
+            s("result.rediagnose.subtitle", "Add up to 2 more photos from different angles and we’ll re-analyze. Uses one credit.")
+        }
+        static var rediagnoseAddCamera: String { s("result.rediagnose.addCamera", "Camera") }
+        static var rediagnoseAddLibrary: String { s("result.rediagnose.addLibrary", "Library") }
+        static var rediagnoseCTA: String { s("result.rediagnose.cta", "Re-analyze") }
+        static var rediagnoseBusy: String { s("result.rediagnose.busy", "Re-analyzing…") }
+        static func rediagnoseCount(_ total: Int) -> String {
+            String(format: s("result.rediagnose.count", "%lld photos total"), total)
+        }
         static var storedDisclaimer: String {
             s("result.storedDisclaimer", "Stored diagnosis. AI guidance, not a substitute for a professional.")
         }

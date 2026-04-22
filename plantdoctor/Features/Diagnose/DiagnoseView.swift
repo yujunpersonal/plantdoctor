@@ -40,6 +40,18 @@ struct DiagnoseView: View {
                         response: response,
                         image: viewModel.selectedImage,
                         onDone: { viewModel.clear() },
+                        rediagnose: RediagnoseBinding(
+                            additionalImages: $viewModel.additionalImages,
+                            isBusy: viewModel.isRediagnosing,
+                            errorMessage: viewModel.rediagnoseError,
+                            maxAdditional: DiagnoseViewModel.maxAdditionalImages,
+                            onRemove: { idx in viewModel.removeAdditionalImage(at: idx) },
+                            onRediagnose: {
+                                Task {
+                                    await viewModel.rediagnose(context: modelContext, language: language.current)
+                                }
+                            },
+                        ),
                     )
                 }
         }

@@ -42,13 +42,20 @@ struct HistoryDetailView: View {
     private var response: DiagnosisResponse {
         DiagnosisResponse(
             plantName: record.plantName,
+            scientificName: record.scientificName,
             commonNames: record.commonNames,
+            description: record.plantDescription,
             condition: record.condition,
             severity: record.severity,
             confidence: record.confidence,
             causes: record.causes,
             fixes: record.fixes,
             careTips: record.careTips,
+            light: record.light,
+            water: record.water,
+            soil: record.soil,
+            temperature: record.temperature,
+            toxicity: record.toxicity,
             disclaimer: L10n.Result.storedDisclaimer,
         )
     }
