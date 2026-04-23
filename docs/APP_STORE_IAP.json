@@ -1,0 +1,125 @@
+{
+  "app_bundle_id": "cn.buddy.plantdoctor",
+  "subscription_group": {
+    "reference_name": "Leafwise Plus",
+    "localizations": {
+      "en-US":   "Leafwise Plus",
+      "zh-Hans": "Leafwise 会员",
+      "zh-Hant": "Leafwise 會員",
+      "de-DE":   "Leafwise Plus",
+      "fr-FR":   "Leafwise Plus",
+      "ja":      "Leafwise プラス",
+      "ko":      "Leafwise 플러스",
+      "es-ES":   "Leafwise Plus",
+      "pt-BR":   "Leafwise Plus",
+      "ru":      "Leafwise Plus",
+      "it":      "Leafwise Plus"
+    }
+  },
+  "iaps": [
+    {
+      "product_id": "cn.buddy.plantdoctor.credits.100",
+      "reference_name": "100 Credits",
+      "type": "CONSUMABLE",
+      "usd_price": "4.99",
+      "review_note": "Grants 100 plant-diagnose credits on successful purchase. Consumed one per diagnosis after the subscription daily quota is used up.",
+      "localizations": {
+        "en-US":   { "name": "100 Credits",   "description": "100 AI plant diagnose credits." },
+        "zh-Hans": { "name": "100 积分",      "description": "100 次 AI 植物诊断积分。" },
+        "zh-Hant": { "name": "100 點數",      "description": "100 次 AI 植物診斷點數。" },
+        "de-DE":   { "name": "100 Guthaben",  "description": "100 KI-Pflanzendiagnose-Guthaben." },
+        "fr-FR":   { "name": "100 crédits",   "description": "100 crédits de diagnostic IA." },
+        "ja":      { "name": "100 クレジット", "description": "100 回の AI 植物診断クレジット。" },
+        "ko":      { "name": "100 크레딧",    "description": "100회 AI 식물 진단 크레딧." },
+        "es-ES":   { "name": "100 créditos",  "description": "100 créditos de diagnóstico IA." },
+        "pt-BR":   { "name": "100 créditos",  "description": "100 créditos de diagnóstico por IA." },
+        "ru":      { "name": "100 кредитов",  "description": "100 кредитов на ИИ-диагностику." },
+        "it":      { "name": "100 crediti",   "description": "100 crediti per diagnosi con IA." }
+      }
+    },
+    {
+      "product_id": "cn.buddy.plantdoctor.credits.500",
+      "reference_name": "500 Credits",
+      "type": "CONSUMABLE",
+      "usd_price": "19.99",
+      "review_note": "Grants 500 plant-diagnose credits on successful purchase. Consumable — stacks with subscription daily quota.",
+      "localizations": {
+        "en-US":   { "name": "500 Credits",   "description": "500 AI plant diagnose credits." },
+        "zh-Hans": { "name": "500 积分",      "description": "500 次 AI 植物诊断积分。" },
+        "zh-Hant": { "name": "500 點數",      "description": "500 次 AI 植物診斷點數。" },
+        "de-DE":   { "name": "500 Guthaben",  "description": "500 KI-Pflanzendiagnose-Guthaben." },
+        "fr-FR":   { "name": "500 crédits",   "description": "500 crédits de diagnostic IA." },
+        "ja":      { "name": "500 クレジット", "description": "500 回の AI 植物診断クレジット。" },
+        "ko":      { "name": "500 크레딧",    "description": "500회 AI 식물 진단 크레딧." },
+        "es-ES":   { "name": "500 créditos",  "description": "500 créditos de diagnóstico IA." },
+        "pt-BR":   { "name": "500 créditos",  "description": "500 créditos de diagnóstico por IA." },
+        "ru":      { "name": "500 кредитов",  "description": "500 кредитов на ИИ-диагностику." },
+        "it":      { "name": "500 crediti",   "description": "500 crediti per diagnosi con IA." }
+      }
+    },
+    {
+      "product_id": "cn.buddy.plantdoctor.credits.1200",
+      "reference_name": "1200 Credits",
+      "type": "CONSUMABLE",
+      "usd_price": "39.99",
+      "review_note": "Grants 1,200 plant-diagnose credits on successful purchase. Best-value consumable top-up.",
+      "localizations": {
+        "en-US":   { "name": "1,200 Credits",  "description": "1,200 AI plant diagnose credits." },
+        "zh-Hans": { "name": "1,200 积分",     "description": "1,200 次 AI 植物诊断积分。" },
+        "zh-Hant": { "name": "1,200 點數",     "description": "1,200 次 AI 植物診斷點數。" },
+        "de-DE":   { "name": "1.200 Guthaben", "description": "1.200 KI-Pflanzendiagnose-Guthaben." },
+        "fr-FR":   { "name": "1 200 crédits",  "description": "1 200 crédits de diagnostic IA." },
+        "ja":      { "name": "1,200 クレジット","description": "1,200 回の AI 植物診断クレジット。" },
+        "ko":      { "name": "1,200 크레딧",   "description": "1,200회 AI 식물 진단 크레딧." },
+        "es-ES":   { "name": "1.200 créditos", "description": "1.200 créditos de diagnóstico IA." },
+        "pt-BR":   { "name": "1.200 créditos", "description": "1.200 créditos de diagnóstico por IA." },
+        "ru":      { "name": "1 200 кредитов", "description": "1 200 кредитов на ИИ-диагностику." },
+        "it":      { "name": "1.200 crediti",  "description": "1.200 crediti per diagnosi con IA." }
+      }
+    }
+  ],
+  "subs": [
+    {
+      "product_id": "cn.buddy.plantdoctor.sub.gold",
+      "reference_name": "Leafwise Gold",
+      "period": "ONE_MONTH",
+      "group_level": 1,
+      "usd_price": "4.99",
+      "review_note": "Auto-renewing monthly subscription. Grants 25 AI plant diagnoses per day. Cancelable anytime in App Store settings.",
+      "localizations": {
+        "en-US":   { "name": "Leafwise Gold",    "description": "25 AI plant diagnoses every day." },
+        "zh-Hans": { "name": "Leafwise 金级",    "description": "每日 25 次 AI 植物诊断。" },
+        "zh-Hant": { "name": "Leafwise 金級",    "description": "每日 25 次 AI 植物診斷。" },
+        "de-DE":   { "name": "Leafwise Gold",    "description": "25 KI-Pflanzendiagnosen pro Tag." },
+        "fr-FR":   { "name": "Leafwise Gold",    "description": "25 diagnostics IA de plantes par jour." },
+        "ja":      { "name": "Leafwise ゴールド", "description": "1 日 25 回の AI 植物診断。" },
+        "ko":      { "name": "Leafwise 골드",    "description": "매일 25회 AI 식물 진단." },
+        "es-ES":   { "name": "Leafwise Gold",    "description": "25 diagnósticos IA de plantas al día." },
+        "pt-BR":   { "name": "Leafwise Gold",    "description": "25 diagnósticos IA de plantas por dia." },
+        "ru":      { "name": "Leafwise Gold",    "description": "25 ИИ-диагностик растений в день." },
+        "it":      { "name": "Leafwise Gold",    "description": "25 diagnosi IA di piante al giorno." }
+      }
+    },
+    {
+      "product_id": "cn.buddy.plantdoctor.sub.silver",
+      "reference_name": "Leafwise Silver",
+      "period": "ONE_MONTH",
+      "group_level": 2,
+      "usd_price": "2.99",
+      "review_note": "Auto-renewing monthly subscription. Grants 10 AI plant diagnoses per day. Cancelable anytime in App Store settings.",
+      "localizations": {
+        "en-US":   { "name": "Leafwise Silver",   "description": "10 AI plant diagnoses every day." },
+        "zh-Hans": { "name": "Leafwise 银级",     "description": "每日 10 次 AI 植物诊断。" },
+        "zh-Hant": { "name": "Leafwise 銀級",     "description": "每日 10 次 AI 植物診斷。" },
+        "de-DE":   { "name": "Leafwise Silber",   "description": "10 KI-Pflanzendiagnosen pro Tag." },
+        "fr-FR":   { "name": "Leafwise Silver",   "description": "10 diagnostics IA de plantes par jour." },
+        "ja":      { "name": "Leafwise シルバー",  "description": "1 日 10 回の AI 植物診断。" },
+        "ko":      { "name": "Leafwise 실버",     "description": "매일 10회 AI 식물 진단." },
+        "es-ES":   { "name": "Leafwise Silver",   "description": "10 diagnósticos IA de plantas al día." },
+        "pt-BR":   { "name": "Leafwise Silver",   "description": "10 diagnósticos IA de plantas por dia." },
+        "ru":      { "name": "Leafwise Silver",   "description": "10 ИИ-диагностик растений в день." },
+        "it":      { "name": "Leafwise Silver",   "description": "10 diagnosi IA di piante al giorno." }
+      }
+    }
+  ]
+}
