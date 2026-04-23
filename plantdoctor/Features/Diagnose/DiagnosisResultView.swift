@@ -80,16 +80,29 @@ struct DiagnosisResultView: View {
     private var headerBlock: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(response.plantName)
-                .font(.title.bold())
+                .font(.title2.bold())
+                .fixedSize(horizontal: false, vertical: true)
             if !response.scientificName.isEmpty {
-                Text(response.scientificName)
-                    .font(.subheadline.italic())
-                    .foregroundStyle(.secondary)
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "globe")
+                            .font(.caption2)
+                        Text(L10n.Result.scientificNameLabel)
+                            .font(.caption2.weight(.semibold))
+                    }
+                    .foregroundStyle(Theme.leaf)
+                    Text(response.scientificName)
+                        .font(.subheadline.italic())
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.top, 2)
             }
             if !response.commonNames.isEmpty {
                 Text(L10n.Result.alsoKnownAs(response.commonNames.joined(separator: ", ")))
                     .font(.footnote)
                     .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             HStack(spacing: 8) {
                 severityPill
@@ -98,8 +111,17 @@ struct DiagnosisResultView: View {
             .padding(.top, 2)
             Text(response.condition)
                 .font(.headline)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 4)
         }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(Theme.leafLight, lineWidth: 1)
+        )
     }
 
     private var severityPill: some View {
@@ -149,7 +171,7 @@ private struct AboutSection: View {
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 14)
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
                 .stroke(Theme.leafLight, lineWidth: 1)
         )
     }
@@ -162,17 +184,35 @@ private struct PlantCareSection: View {
     let temperature: String
     let toxicity: String
 
+    private struct CareItem: Identifiable {
+        let id = UUID()
+        let label: String
+        let icon: String
+        let value: String
+    }
+
+    private var items: [CareItem] {
+        [
+            CareItem(label: L10n.Result.careLight, icon: "sun.max.fill", value: light),
+            CareItem(label: L10n.Result.careWater, icon: "drop.fill", value: water),
+            CareItem(label: L10n.Result.careSoil, icon: "tray.fill", value: soil),
+            CareItem(label: L10n.Result.careTemperature, icon: "thermometer.medium", value: temperature),
+            CareItem(label: L10n.Result.careToxicity, icon: "exclamationmark.triangle.fill", value: toxicity),
+        ].filter { !$0.value.isEmpty }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Label(L10n.Result.sectionPlantCare, systemImage: "drop.fill")
+            Label(L10n.Result.sectionPlantCare, systemImage: "sparkles")
                 .font(.headline)
                 .foregroundStyle(Theme.leaf)
             VStack(spacing: 0) {
-                row(label: L10n.Result.careLight, icon: "sun.max.fill", value: light, isFirst: true)
-                row(label: L10n.Result.careWater, icon: "drop.fill", value: water, isFirst: false)
-                row(label: L10n.Result.careSoil, icon: "tray.fill", value: soil, isFirst: false)
-                row(label: L10n.Result.careTemperature, icon: "thermometer.medium", value: temperature, isFirst: false)
-                row(label: L10n.Result.careToxicity, icon: "exclamationmark.triangle.fill", value: toxicity, isFirst: false)
+                ForEach(Array(items.enumerated()), id: \.element.id) { idx, item in
+                    if idx > 0 {
+                        Divider()
+                    }
+                    row(item)
+                }
             }
         }
         .padding(14)
@@ -180,35 +220,35 @@ private struct PlantCareSection: View {
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 14)
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
                 .stroke(Theme.leafLight, lineWidth: 1)
         )
     }
 
-    @ViewBuilder
-    private func row(label: String, icon: String, value: String, isFirst: Bool) -> some View {
-        if !value.isEmpty {
-            if !isFirst {
-                Divider()
-            }
-            HStack(alignment: .top, spacing: 12) {
-                Image(systemName: icon)
-                    .font(.system(size: 14, weight: .semibold))
+    private func row(_ item: CareItem) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(Theme.leafLight.opacity(0.55))
+                Image(systemName: item.icon)
+                    .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(Theme.leaf)
-                    .frame(width: 22, height: 22)
-                    .background(Theme.leafLight.opacity(0.5))
-                    .clipShape(Circle())
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(label)
-                        .font(.caption.bold())
-                        .foregroundStyle(.secondary)
-                    Text(value)
-                        .font(.body)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
             }
-            .padding(.vertical, 10)
+            .frame(width: 30, height: 30)
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(item.label)
+                    .font(.caption.bold())
+                    .foregroundStyle(.secondary)
+                Text(item.value)
+                    .font(.subheadline)
+                    .foregroundStyle(.primary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
+        .padding(.vertical, 12)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -233,12 +273,17 @@ private struct RediagnoseSection: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             if !images.isEmpty {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10) {
-                        ForEach(Array(images.enumerated()), id: \.offset) { idx, img in
-                            thumbnail(img: img, index: idx)
+                VStack(alignment: .leading, spacing: 8) {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(Array(images.enumerated()), id: \.offset) { idx, img in
+                                thumbnail(img: img, index: idx)
+                            }
                         }
                     }
+                    Text(L10n.Result.rediagnoseCount(images.count + 1))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
             }
 
@@ -277,10 +322,6 @@ private struct RediagnoseSection: View {
                     } else {
                         Image(systemName: "sparkles")
                         Text(L10n.Result.rediagnoseCTA)
-                        if !images.isEmpty {
-                            Text("· \(L10n.Result.rediagnoseCount(images.count + 1))")
-                                .opacity(0.85)
-                        }
                     }
                 }
             }
@@ -293,7 +334,7 @@ private struct RediagnoseSection: View {
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 14)
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
                 .stroke(Theme.leafLight, lineWidth: 1)
         )
         .sheet(isPresented: $showCamera) {
@@ -396,7 +437,7 @@ private struct DetailSection: View {
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: 14)
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
                     .stroke(Theme.leafLight, lineWidth: 1)
             )
         }

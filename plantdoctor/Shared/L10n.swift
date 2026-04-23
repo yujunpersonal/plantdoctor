@@ -225,6 +225,9 @@ enum L10n {
         static func alsoKnownAs(_ names: String) -> String {
             String(format: s("result.alsoKnownAs", "Also known as %@"), names)
         }
+        static var scientificNameLabel: String {
+            s("result.scientificNameLabel", "Scientific name · used worldwide")
+        }
         static var sectionAbout: String { s("result.section.about", "About this plant") }
         static var sectionCauses: String { s("result.section.causes", "Likely causes") }
         static var sectionFixes: String { s("result.section.fixes", "What to do") }
@@ -295,6 +298,12 @@ enum L10n {
                 return URL(string: "https://www.apple.com/legal/internet-services/itunes/kr/terms.html")!
             case .spanish:
                 return URL(string: "https://www.apple.com/legal/internet-services/itunes/es/terms.html")!
+            case .portugueseBrazil:
+                return URL(string: "https://www.apple.com/legal/internet-services/itunes/br/terms.html")!
+            case .russian:
+                return URL(string: "https://www.apple.com/legal/internet-services/itunes/ru/terms.html")!
+            case .italian:
+                return URL(string: "https://www.apple.com/legal/internet-services/itunes/it/terms.html")!
             }
         }
 
@@ -309,6 +318,9 @@ enum L10n {
             case .japanese: slug = "ja"
             case .korean: slug = "ko"
             case .spanish: slug = "es"
+            case .portugueseBrazil: slug = "pt-BR"
+            case .russian: slug = "ru"
+            case .italian: slug = "it"
             }
             return URL(string: "https://support.buddy.cn/\(slug)/privacy-policy")!
         }

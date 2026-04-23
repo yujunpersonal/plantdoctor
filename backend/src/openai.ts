@@ -19,6 +19,9 @@ const LANGUAGE_NAMES: Record<string, string> = {
   ja: "Japanese",
   ko: "Korean",
   es: "Spanish",
+  "pt-BR": "Brazilian Portuguese",
+  ru: "Russian",
+  it: "Italian",
 };
 
 function languageName(code: string | undefined): string {
